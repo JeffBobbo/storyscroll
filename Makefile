@@ -1,9 +1,9 @@
 EXEC:=story
 
-MAIN = main.o story.o
+MAIN = main.o scroll.o story.o
 
 # general compiler settings
-CFLAGS=-std=c11 -Wall -Wextra -Werror -ggdb
+CFLAGS=-std=gnu11 -Wall -Wextra -ggdb
 LDFLAGS=
 
 #default target is debug Linux
