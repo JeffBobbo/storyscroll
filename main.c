@@ -63,28 +63,19 @@ int main(int argc, char const** argv)
       console_set_cursor_pos(0, csz.y - i);
 
     uint32_t scroll = MAX((int32_t)i - csz.y, 0);
-    printed += scroll_print_top(csz.x, toPrint, scroll);
+//    printed += scroll_print_top(csz.x, toPrint, scroll);
+    printed += scroll_print_body(csz.x, toPrint - printed, story);
     int32_t d = 0;
-    printed += scroll_print_bottom(csz.x, toPrint - printed, &d);
+    //printed += scroll_print_bottom(csz.x, toPrint - printed, &d);
     //printf("%i\n", printed);
     fflush(stdout);
-    millisleep(100);
+    millisleep(500);
     ++i;
     if (d)
       break;
   }
-  getc(stdin); // really bad, but whatever
+  if (!sigC)
+    getc(stdin); // really bad, but whatever
   console_clear();
-  /*
-  char* line = strtok(story, "\n");
-  do
-  {
-    printf("|     |%s", line);
-    for (int i = 0, l = SCROLL_WIDTH - strlen(line); i < l; ++i)
-      printf(" ");
-    printf("|     |\n");
-  }
-  while ((line = strtok(NULL, "\n")) && strlen(line));
-  */
   return 0;
 }
