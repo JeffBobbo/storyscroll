@@ -60,11 +60,14 @@ int main(int argc, char const** argv)
     uint32_t toPrint = MIN(csz.y, i);
     console_clear();
     if (i < csz.y) // if so, move the cursor to the right place so we scroll up
+    {
+      //printed = csz.y - i;
       console_set_cursor_pos(0, csz.y - i);
+    }
 
     uint32_t scroll = MAX((int32_t)i - csz.y, 0);
-//    printed += scroll_print_top(csz.x, toPrint, scroll);
-    printed += scroll_print_body(csz.x, csz.y - (i + printed), story);
+    printed += scroll_print_top(csz.x, toPrint, scroll);
+    printed += scroll_print_body(csz.x, csz.y - (i + printed), story, scroll+printed);
     int32_t d = 0;
     //printed += scroll_print_bottom(csz.x, toPrint - printed, &d);
     //printf("%i\n", printed);
