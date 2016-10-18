@@ -64,7 +64,7 @@ int main(int argc, char const** argv)
 
     uint32_t scroll = MAX((int32_t)i - csz.y, 0);
 //    printed += scroll_print_top(csz.x, toPrint, scroll);
-    printed += scroll_print_body(csz.x, toPrint - printed, story);
+    printed += scroll_print_body(csz.x, csz.y - (i + printed), story);
     int32_t d = 0;
     //printed += scroll_print_bottom(csz.x, toPrint - printed, &d);
     //printf("%i\n", printed);
