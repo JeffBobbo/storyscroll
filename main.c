@@ -51,26 +51,29 @@ int main(int argc, char const** argv)
   signal(SIGINT, int_handler);
 
   // how much space do we have to play with?
-  console_v csz = console_size();
+  const console_v csz = console_size();
+
+  printf("Console size: %ix%i\n", csz.x, csz.y);
+  millisleep(1000);
 
   uint32_t i = 0;
   while (!sigC)
   {
-    uint32_t printed = 0; // how much space have we used
-    uint32_t toPrint = MIN(csz.y, i);
-    console_clear();
-    if (i < csz.y) // if so, move the cursor to the right place so we scroll up
-    {
-      //printed = csz.y - i;
-      console_set_cursor_pos(0, csz.y - i);
-    }
+    int32_t space = MIN(csz.y, i); // how much space we have to use. space <= used
+    int32_t used = 0; // how much space have we used so far
+    int32_t offset = csz.y - i; // how much are we offset, 0 is the top of the console
 
-    uint32_t scroll = MAX((int32_t)i - csz.y, 0);
-    printed += scroll_print_top(csz.x, toPrint, scroll);
-    printed += scroll_print_body(csz.x, csz.y - (i + printed), story, scroll+printed);
+    console_clear();
+    if (offset > 0) // if so, move the cursor to the right place so we scroll up
+    {
+      //used = csz.y - i;
+      console_set_cursor_pos(0, offset);
+    }
+    used += scroll_print_top(csz.x, space, used, offset);
+    used += scroll_print_body(csz.x, space, used, offset, story);
     int32_t d = 0;
-    //printed += scroll_print_bottom(csz.x, toPrint - printed, &d);
-    //printf("%i\n", printed);
+    used += scroll_print_bottom(csz.x, space, used, offset, &d);
+    //printf("%i\n", used);
     fflush(stdout);
     millisleep(500);
     ++i;

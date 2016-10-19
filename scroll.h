@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-uint32_t scroll_print_top(const uint32_t width, const uint32_t height, const uint32_t scroll);
-uint32_t scroll_print_body(const uint32_t width, const uint32_t height, char* const s, const uint32_t scroll);
-uint32_t scroll_print_bottom(const uint32_t width, const uint32_t height, int32_t* d);
+uint32_t scroll_print_top(const int32_t width, const int32_t space, const int32_t used, const int32_t offset);
+uint32_t scroll_print_body(const int32_t width, const int32_t space, const int32_t used, const int32_t offset, char* const s);
+uint32_t scroll_print_bottom(const int32_t width, const int32_t space, const int32_t used, const int32_t offset, int32_t* const d);
 #endif
