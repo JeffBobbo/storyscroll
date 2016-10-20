@@ -79,7 +79,7 @@ uint32_t scroll_print_top(const int32_t width, const int32_t space, const int32_
     if (i < 0)
       continue;
     ++p;
-    if (i != offset)
+    if (i != -offset)
       printf("\n");
     printf("%s", SCROLL_TOP_LEFT[i]);
     for (int32_t j = 0; j < MIDDLE_WIDTH; ++j)
@@ -142,7 +142,8 @@ uint32_t scroll_print_body(const int32_t width, const int32_t space, const int32
   char* line = next_line(s, 1);
 
   const int32_t h = space - used;
-  int32_t i = 0;//offset+used;
+  int32_t i = used == 0 ? offset : 0;
+  printf("offset: %i, used: %i, i: %i\n", offset, used, i);
   uint32_t p = 0;
   for (; i < h; ++i)
   {
@@ -233,8 +234,9 @@ uint32_t scroll_print_bottom(const int32_t width, const int32_t space, const int
 
   const int32_t MIDDLE_WIDTH = width - SCROLL_BOTTOM_LEFT_W - SCROLL_BOTTOM_RIGHT_W;
 
-  const int32_t h = MIN(sizeof(SCROLL_BOTTOM_LEFT) / sizeof(SCROLL_BOTTOM_LEFT[0]), (uint32_t)(space - used));
-  int32_t i = offset < 0 ? -offset: 0;
+  const int32_t HEIGHT = sizeof(SCROLL_BOTTOM_LEFT) / sizeof(SCROLL_BOTTOM_LEFT[0]);
+  const int32_t h = MIN(HEIGHT, (space - used));
+  int32_t i = offset + HEIGHT < 0 ? offset + HEIGHT : 0;
   uint32_t p = 0;
   for (; i < h; ++i)
   {
