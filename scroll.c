@@ -148,7 +148,7 @@ uint32_t scroll_print_body(const int32_t width, const int32_t space, const int32
   int32_t i = used == 0 ? progress++ : 0;
   uint32_t p = 0;
   for (int j = 0; j < i; ++j)
-    next_line(s, 0);
+    free(next_line(s, 0));
   for (; i < h; ++i)
   {
     line = next_line(s, 0);
@@ -172,6 +172,7 @@ uint32_t scroll_print_body(const int32_t width, const int32_t space, const int32
       printf(" ");
     console_set_colour(FG_RED);
     printf("%s\n", SCROLL_RIGHT);
+    free(line);
   }
   return p;
 }
