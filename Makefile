@@ -1,6 +1,6 @@
 EXEC:=story
 
-MAIN = main.o scroll.o story.o
+MAIN = main.o scroll.o story.o term/console.o
 
 # general compiler settings
 CFLAGS=-std=gnu11 -Wall -Wextra -ggdb

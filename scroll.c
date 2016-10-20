@@ -65,7 +65,7 @@ const char* const SCROLL_TOP_RIGHT[] = {
 "#+,          "};
 
 
-uint32_t scroll_print_top(const int32_t width, const int32_t space, const int32_t used, const int32_t offset)
+uint32_t scroll_print_top(const int32_t width, const int32_t space, const int32_t offset)
 {
   int32_t SCROLL_TOP_LEFT_W = strlen(SCROLL_TOP_LEFT[0]);
   int32_t SCROLL_TOP_RIGHT_W = strlen(SCROLL_TOP_RIGHT[0]);
@@ -136,7 +136,7 @@ char* next_line(const char* const s, uint32_t reset)
 
 const char* const SCROLL_LEFT = "                         @@  ";
 const char* const SCROLL_RIGHT = "         @@                         ";
-uint32_t scroll_print_body(const int32_t width, const int32_t space, const int32_t used, const int32_t offset, char* const s)
+uint32_t scroll_print_body(const int32_t width, const int32_t space, const int32_t used, char* const s)
 {
   int32_t SCROLL_LEFT_W = strlen(SCROLL_LEFT);
   int32_t SCROLL_RIGHT_W = strlen(SCROLL_RIGHT);
@@ -235,7 +235,7 @@ const char* const SCROLL_BOTTOM_RIGHT[] = {
 "#,                                  "
 };
 
-uint32_t scroll_print_bottom(const int32_t width, const int32_t space, const int32_t used, const int32_t offset, int32_t* const d)
+uint32_t scroll_print_bottom(const int32_t width, const int32_t space, const int32_t used, int32_t* const d)
 {
   int32_t SCROLL_BOTTOM_LEFT_W = strlen(SCROLL_BOTTOM_LEFT[0]);
   int32_t SCROLL_BOTTOM_RIGHT_W = strlen(SCROLL_BOTTOM_RIGHT[0]);

@@ -7,6 +7,14 @@
 #include "smath.h"
 #include "term/console.h"
 
+#ifdef _WIN32    
+#include <windows.h>    
+#elif _POSIX_C_SOURCE >= 199309L    
+#include <time.h> // nanosleep    
+#else    
+#include <unistd.h> // usleep    
+#endif
+
 static volatile uint32_t sigC = 0;
 
 void int_handler(int dummy)
@@ -69,10 +77,10 @@ int main(int argc, char const** argv)
       //used = csz.y - i;
       console_set_cursor_pos(0, offset);
     }
-    used += scroll_print_top(csz.x, space, used, offset);
-    used += scroll_print_body(csz.x, space, used, offset, story);
+    used += scroll_print_top(csz.x, space, offset);
+    used += scroll_print_body(csz.x, space, used, story);
     int32_t d = 0;
-    used += scroll_print_bottom(csz.x, space, used, offset, &d);
+    used += scroll_print_bottom(csz.x, space, used, &d);
     //printf("%i\n", used);
     fflush(stdout);
     millisleep(333);
