@@ -142,9 +142,11 @@ uint32_t scroll_print_body(const int32_t width, const int32_t space, const int32
   char* line = next_line(s, 1);
 
   const int32_t h = space - used;
-  int32_t i = used == 0 ? offset : 0;
-  printf("offset: %i, used: %i, i: %i\n", offset, used, i);
+  static int32_t progress = 0;
+  int32_t i = used == 0 ? progress++ : 0;
   uint32_t p = 0;
+  for (int j = 0; j < i; ++j)
+    next_line(s, 0);
   for (; i < h; ++i)
   {
     line = next_line(s, 0);
@@ -236,21 +238,22 @@ uint32_t scroll_print_bottom(const int32_t width, const int32_t space, const int
 
   const int32_t HEIGHT = sizeof(SCROLL_BOTTOM_LEFT) / sizeof(SCROLL_BOTTOM_LEFT[0]);
   const int32_t h = MIN(HEIGHT, (space - used));
-  int32_t i = offset + HEIGHT < 0 ? offset + HEIGHT : 0;
+  static int32_t progress = 0;
+  int32_t i = used == 0 ? progress++ : 0;
   uint32_t p = 0;
   for (; i < h; ++i)
   {
     if (i < 0)
       continue;
     ++p;
-    if (i)
-      printf("\n");
     printf("%s", SCROLL_BOTTOM_LEFT[i]);
     for (int32_t j = 0; j < MIDDLE_WIDTH; ++j)
       printf(i >= 24 ? "@" : " ");
     printf("%s", SCROLL_BOTTOM_RIGHT[i]);
+    if (i < h)
+      printf("\n");
   }
-  //if (p == (uint32_t)h)
-  //  *d = 1;
+  if (h && progress > h)
+    *d = 1;
   return p;
 }

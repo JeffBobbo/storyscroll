@@ -56,7 +56,7 @@ int main(int argc, char const** argv)
   printf("Console size: %ix%i\n", csz.x, csz.y);
   getc(stdin);
 
-  uint32_t i = 70;
+  uint32_t i = 0;
   while (!sigC)
   {
     int32_t space = MIN(csz.y, i); // how much space we have to use. space <= used
@@ -75,7 +75,7 @@ int main(int argc, char const** argv)
     used += scroll_print_bottom(csz.x, space, used, offset, &d);
     //printf("%i\n", used);
     fflush(stdout);
-    millisleep(1000);
+    millisleep(333);
     ++i;
     if (d)
       break;
