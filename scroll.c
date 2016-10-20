@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #include "smath.h"
+#include "term/console.h"
 
 const char* const SCROLL_TOP_LEFT[] = {
 "                                  :@@@@@@@@@@@@@@@@@@@",
@@ -74,6 +75,7 @@ uint32_t scroll_print_top(const int32_t width, const int32_t space, const int32_
   const int32_t h = MIN(sizeof(SCROLL_TOP_LEFT) / sizeof(SCROLL_TOP_LEFT[0]), (uint32_t)space);
   int32_t i = offset < 0 ? -offset : 0;
   uint32_t p = 0;
+  console_set_colour(FG_RED);
   for (; i < h; ++i)
   {
     if (i < 0)
@@ -98,7 +100,7 @@ char* next_line(const char* const s, uint32_t reset)
   if ((s && str != s) || reset)
   {
     str = (char*)s;
-    lines = 0;
+    lines = 1;
     free(linepos);
     for (uint32_t i = 0, l = strlen(str); i < l; ++i)
     {
@@ -126,7 +128,7 @@ char* next_line(const char* const s, uint32_t reset)
   size_t start = linepos[progress++];
   size_t end = linepos[progress++];
   size_t len = end-start;
-  char* ret = malloc(sizeof(char) * (len+1));
+  char* ret = malloc(sizeof(char) * (len+2));
   memcpy(ret, str+start, len);
   ret[len] = '\0';
   return ret;
@@ -162,9 +164,13 @@ uint32_t scroll_print_body(const int32_t width, const int32_t space, const int32
         line[sz] = '%';
     }
     // TODO: Check if the line is too long
-    printf("%s%s", SCROLL_LEFT, line);
+    console_set_colour(FG_RED);
+    printf("%s", SCROLL_LEFT);
+    console_set_colour(FG_DEFAULT);
+    printf("%s", line);
     for (uint32_t j = 0; j < width - (SCROLL_LEFT_W + SCROLL_RIGHT_W + lineLen); ++j)
       printf(" ");
+    console_set_colour(FG_RED);
     printf("%s\n", SCROLL_RIGHT);
   }
   return p;
@@ -241,6 +247,7 @@ uint32_t scroll_print_bottom(const int32_t width, const int32_t space, const int
   static int32_t progress = 0;
   int32_t i = used == 0 ? progress++ : 0;
   uint32_t p = 0;
+  console_set_colour(FG_RED);
   for (; i < h; ++i)
   {
     if (i < 0)

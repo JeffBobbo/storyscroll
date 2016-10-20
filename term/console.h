@@ -23,6 +23,7 @@ typedef struct console_v
 typedef enum console_col
 {
   NONE = -0x01,
+  FG_BLACK  = 0x00,
 #ifdef _WIN32
 // windows colours
   FG_BLUE   = 0x01,
@@ -60,7 +61,7 @@ typedef enum console_col
   BG_WHITE   = BG_BLUE|BG_GREEN|BG_RED
 } console_col;
 
-console_v console_size()
+static console_v console_size()
 {
   console_v sz = {0, 0};
 #ifdef _WIN32
@@ -78,7 +79,7 @@ console_v console_size()
   return sz;
 }
 
-void console_set_colour(console_col col)
+static void console_set_colour(console_col col)
 {
 #ifdef _WIN32
   HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -87,12 +88,12 @@ void console_set_colour(console_col col)
   uint8_t fg = (col & 0x0F);
   uint8_t bg = col >= BG_RED ? (col & 0xF0) / 16 : 0;
 
-  printf("\033[%i;%im", fg + 30, bg + 40); ///*(col & FG_INTENSE ? ";1" : ";24") <<*/ "m";
+  printf("\033[%i;%im", fg + 30, bg + 40);
 #endif
 }
 
 
-void console_set_cursor_pos(const int16_t x, const int16_t y)
+static void console_set_cursor_pos(const int16_t x, const int16_t y)
 {
 #ifdef _WIN32
   COORD c = {x, y};
@@ -101,12 +102,12 @@ void console_set_cursor_pos(const int16_t x, const int16_t y)
   printf("\033[%i;%iH", y+1, x+1);
 #endif
 }
-void console_set_cursor_posv(const console_v* const p)
+static void console_set_cursor_posv(const console_v* const p)
 {
   console_set_cursor_pos(p->x, p->y);
 }
 
-void console_clear()
+static void console_clear()
 {
 #ifdef _WIN32
   HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -126,7 +127,7 @@ void console_clear()
 }
 
 
-void output(const char* const str, const int16_t x, const int16_t y, const console_col c)
+static void output(const char* const str, const int16_t x, const int16_t y, const console_col c)
 {
   if (c >= 0)
     console_set_colour(c);
