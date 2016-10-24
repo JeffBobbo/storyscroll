@@ -5,14 +5,14 @@
 #include "story.h"
 #include "scroll.h"
 #include "smath.h"
-#include "term/console.h"
+#include "console.h"
 
-#ifdef _WIN32    
-#include <windows.h>    
-#elif _POSIX_C_SOURCE >= 199309L    
-#include <time.h> // nanosleep    
-#else    
-#include <unistd.h> // usleep    
+#ifdef _WIN32
+#include <windows.h>
+#elif _POSIX_C_SOURCE >= 199309L
+#include <time.h> // nanosleep
+#else
+#include <unistd.h> // usleep
 #endif
 
 static volatile uint32_t sigC = 0;

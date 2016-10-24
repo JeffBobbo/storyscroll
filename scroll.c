@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 #include "smath.h"
-#include "term/console.h"
+#include "console.h"
 
 const char* const SCROLL_TOP_LEFT[] = {
 "                                  :@@@@@@@@@@@@@@@@@@@",
